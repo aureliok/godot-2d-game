@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://bm3mg0no27ftr"]
+
+[ext_resource type="Script" path="res://scenes/projectiles/super_laser.gd" id="1_mf6bj"]
+[ext_resource type="Texture2D" uid="uid://3ujhafihhxd3" path="res://art/projectiles/super_laser_1.png" id="1_py7e3"]
+[ext_resource type="Texture2D" uid="uid://bl85snkwxl7qj" path="res://art/projectiles/super_laser_2.png" id="2_mbbjq"]
+[ext_resource type="Texture2D" uid="uid://b1tif3xcvb2sn" path="res://art/projectiles/super_laser_3.png" id="3_7jk7s"]
+
+[sub_resource type="Animation" id="Animation_ysft0"]
+resource_name = "super_laser_start"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1.07177, 17.1484),
+"update": 0,
+"values": [Vector2(0.1, 0.1), Vector2(0.4, 0.4)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xvuxb"]
+_data = {
+"super_laser_start": SubResource("Animation_ysft0")
+}
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_focwp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_mbbjq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_7jk7s")
+}],
+"loop": true,
+"name": &"super_laser_travel",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sn4aq"]
+radius = 160.0
+
+[node name="SuperLaser" type="Area2D"]
+collision_mask = 6
+script = ExtResource("1_mf6bj")
+
+[node name="SuperLaserStart" type="Sprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_py7e3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SuperLaserStart"]
+libraries = {
+"": SubResource("AnimationLibrary_xvuxb")
+}
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+scale = Vector2(0.4, 0.4)
+sprite_frames = SubResource("SpriteFrames_focwp")
+animation = &"super_laser_travel"
+frame = 1
+frame_progress = 0.703633
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(92, 6)
+scale = Vector2(0.4, 0.4)
+shape = SubResource("CircleShape2D_sn4aq")
+disabled = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

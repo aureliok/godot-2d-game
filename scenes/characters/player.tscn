@@ -1,0 +1,260 @@
+[gd_scene load_steps=20 format=3 uid="uid://cfem74ede2h17"]
+
+[ext_resource type="Texture2D" uid="uid://buevxsr2ou046" path="res://art/character/idle/idle_1.png" id="1_cqeqq"]
+[ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_w80cm"]
+[ext_resource type="Texture2D" uid="uid://c0o3bnyxvaf5v" path="res://art/lights/lights_1.png" id="2_0jnvj"]
+[ext_resource type="Texture2D" uid="uid://d1twnd4ya1ivo" path="res://art/character/death/death_1.png" id="2_2tujf"]
+[ext_resource type="Shader" path="res://scenes/characters/player.gdshader" id="2_7ymwe"]
+[ext_resource type="Texture2D" uid="uid://dxw1nytcwn7k6" path="res://art/character/idle/idle_2.png" id="2_ab4qb"]
+[ext_resource type="Texture2D" uid="uid://dpprkexrrtco2" path="res://art/character/firing/firing_1.png" id="2_almle"]
+[ext_resource type="Texture2D" uid="uid://cved5hev8ae1t" path="res://art/character/idle/idle_3.png" id="3_hxicr"]
+[ext_resource type="Texture2D" uid="uid://bhaotpfhmp2ss" path="res://art/character/firing/firing_2.png" id="3_nqsn6"]
+[ext_resource type="Texture2D" uid="uid://jk2wvh24tni5" path="res://art/character/idle/idle_4.png" id="4_sbwc5"]
+[ext_resource type="Texture2D" uid="uid://de6idrw25vcdi" path="res://art/character/firing/firing_3.png" id="4_ud5f1"]
+[ext_resource type="Texture2D" uid="uid://c5qqkwj0f4wp7" path="res://art/character/firing/firing_4.png" id="5_dk80p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c1xq7"]
+radius = 32.0156
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_we6sm"]
+shader = ExtResource("2_7ymwe")
+shader_parameter/line_color = Color(0.337255, 0.717647, 0.996078, 1)
+shader_parameter/line_thickness = 0.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k6atr"]
+animations = [{
+"frames": [{
+"duration": 3.0,
+"texture": ExtResource("2_2tujf")
+}],
+"loop": true,
+"name": &"death",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 30.0,
+"texture": ExtResource("2_almle")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_nqsn6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ud5f1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_dk80p")
+}],
+"loop": true,
+"name": &"firing",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 30.0,
+"texture": ExtResource("1_cqeqq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ab4qb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_hxicr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_sbwc5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 30.0
+}]
+
+[sub_resource type="Animation" id="Animation_crlpi"]
+resource_name = "poweruplvl1"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/line_thickness")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 5.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:material:shader_parameter/line_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0.337255, 0.717647, 0.996078, 0.278431), Color(0.337255, 0.717647, 0.996078, 1), Color(0.337255, 0.717647, 0.996078, 0.278431)]
+}
+
+[sub_resource type="Animation" id="Animation_xv05e"]
+resource_name = "poweruplvl2"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/line_thickness")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 7.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:material:shader_parameter/line_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0.337255, 0.717647, 0.996078, 0), Color(0.337255, 0.717647, 0.996078, 1), Color(0.337255, 0.717647, 0.996078, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_c0ok4"]
+resource_name = "poweruplvl3"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/line_thickness")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 10.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:material:shader_parameter/line_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0.337255, 0.717647, 0.996078, 0.278431), Color(0.337255, 0.717647, 0.996078, 1), Color(0.337255, 0.717647, 0.996078, 0.278431)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PowerUpLight:energy")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 8.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PowerUpParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6dod8"]
+_data = {
+"poweruplvl1": SubResource("Animation_crlpi"),
+"poweruplvl2": SubResource("Animation_xv05e"),
+"poweruplvl3": SubResource("Animation_c0ok4")
+}
+
+[node name="Player" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_w80cm")
+
+[node name="CollisionShape2DPlayer" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("CircleShape2D_c1xq7")
+
+[node name="PowerUpLight" type="PointLight2D" parent="."]
+enabled = false
+color = Color(0.427451, 0.588235, 0.905882, 1)
+energy = 8.0
+texture = ExtResource("2_0jnvj")
+texture_scale = 0.1
+
+[node name="PowerUpParticles" type="CPUParticles2D" parent="."]
+scale = Vector2(1.2, 1.2)
+emitting = false
+amount = 200
+lifetime = 0.1
+randomness = 0.57
+emission_shape = 2
+emission_sphere_radius = 43.71
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+orbit_velocity_min = -0.2
+orbit_velocity_max = 0.2
+scale_amount_min = 0.3
+scale_amount_max = 2.0
+color = Color(0.945098, 0.839216, 0.145098, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_we6sm")
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_k6atr")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.591546
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_6dod8")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -0.5)
+shape = SubResource("CircleShape2D_c1xq7")
+
+[node name="LaserStartPosition" type="Marker2D" parent="."]
+position = Vector2(46, 0)
+
+[node name="LaserTimer" type="Timer" parent="."]
+wait_time = 0.12
+one_shot = true
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="EnergyRecoveryTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[node name="LaserStoppedTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="LaserTimer" to="." method="_on_laser_timer_timeout"]
+[connection signal="timeout" from="EnergyRecoveryTimer" to="." method="_on_energy_recovery_timer_timeout"]
+[connection signal="timeout" from="LaserStoppedTimer" to="." method="_on_laser_stopped_timer_timeout"]

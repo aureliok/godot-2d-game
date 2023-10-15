@@ -1,0 +1,90 @@
+[gd_scene load_steps=12 format=3 uid="uid://nlfiyhwfygn1"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_y48xf"]
+[ext_resource type="PackedScene" uid="uid://cfem74ede2h17" path="res://scenes/characters/player.tscn" id="2_bidvo"]
+[ext_resource type="Texture2D" uid="uid://3jhunikqpa05" path="res://art/background/background.png" id="2_hxhvy"]
+[ext_resource type="Script" path="res://scenes/characters/ParallaxBackground.gd" id="2_i5f56"]
+[ext_resource type="PackedScene" uid="uid://ue7maurm31qw" path="res://scenes/characters/hud.tscn" id="3_8qknr"]
+[ext_resource type="AudioStream" uid="uid://tg1lxw7i67yp" path="res://art/audio/background_music/batchbug-sweet-dreams.mp3" id="3_oonlm"]
+[ext_resource type="Script" path="res://scenes/characters/BackgroundMusic.gd" id="5_itf8g"]
+[ext_resource type="AudioStream" uid="uid://coj2qyhtuxi2q" path="res://art/audio/sound_effects/short-laser-gun-shot.wav" id="6_57670"]
+[ext_resource type="AudioStream" uid="uid://cmeoi5ftx8nw2" path="res://art/audio/sound_effects/get-powerup-orb.wav" id="9_53jqf"]
+[ext_resource type="AudioStream" uid="uid://c06veqx71humq" path="res://art/audio/sound_effects/super-laser-gun.wav" id="10_m5qnu"]
+
+[sub_resource type="Curve2D" id="Curve2D_20577"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -3, 2, 0, 0, 0, 0, -1, -3, 0, 0, 0, 0, -3, 2, 0, 0, 0, 0, 1019, 0, 0, 0, 0, 0, 1023, 762, 0, 0, 0, 0, -5, 764, 0, 0, 0, 0, -3, 2)
+}
+point_count = 7
+
+[node name="Main" type="Node"]
+script = ExtResource("1_y48xf")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+script = ExtResource("2_i5f56")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1600, 1200)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("2_hxhvy")
+centered = false
+
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_oonlm")
+volume_db = -4.0
+script = ExtResource("5_itf8g")
+
+[node name="Player" parent="." instance=ExtResource("2_bidvo")]
+
+[node name="IncreaseMobTimer" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(240, 450)
+
+[node name="MobPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_20577")
+
+[node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
+position = Vector2(-3, 2)
+rotation = -1.19029
+
+[node name="HUD" parent="." instance=ExtResource("3_8qknr")]
+
+[node name="Projectiles" type="Node2D" parent="."]
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="LaserSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_57670")
+
+[node name="Items" type="Node2D" parent="."]
+
+[node name="GetPowerUpOrbSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_53jqf")
+volume_db = 10.0
+pitch_scale = 0.9
+attenuation = 0.5
+
+[node name="SuperLaserSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_m5qnu")
+volume_db = 5.0
+
+[connection signal="energy_recovery" from="Player" to="." method="_on_player_energy_recovery"]
+[connection signal="get_powerup_orb" from="Player" to="." method="_on_player_get_powerup_orb"]
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="laser_fire" from="Player" to="." method="_on_player_laser_fire"]
+[connection signal="super_laser_fire" from="Player" to="." method="_on_player_super_laser_fire"]
+[connection signal="timeout" from="IncreaseMobTimer" to="." method="_on_increase_mob_timer_timeout"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]

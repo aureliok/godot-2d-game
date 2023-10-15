@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://yxjvtl6o7vlj"]
+
+[ext_resource type="FontFile" uid="uid://dp2onb0mf0c36" path="res://fonts/Xolonium-Bold.otf" id="1_05i7l"]
+[ext_resource type="Script" path="res://scenes/characters/damage_display.gd" id="1_8jk1a"]
+
+[sub_resource type="Animation" id="Animation_law4x"]
+resource_name = "popup"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.535886, 0.535887),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(3, 3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 43.7134),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_abnl6"]
+_data = {
+"popup": SubResource("Animation_law4x")
+}
+
+[node name="DamageDisplay" type="Node2D"]
+scale = Vector2(1e-05, 1e-05)
+script = ExtResource("1_8jk1a")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -19.0
+offset_top = -10.0
+offset_right = 21.0
+offset_bottom = 13.0
+theme_override_colors/font_color = Color(1, 1, 0.101961, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("1_05i7l")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "popup"
+libraries = {
+"": SubResource("AnimationLibrary_abnl6")
+}

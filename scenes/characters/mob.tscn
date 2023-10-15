@@ -1,0 +1,99 @@
+[gd_scene load_steps=11 format=3 uid="uid://ck1r2vimf645h"]
+
+[ext_resource type="Script" path="res://scenes/characters/mob.gd" id="1_bug0d"]
+[ext_resource type="Texture2D" uid="uid://dc1hwme5jogfd" path="res://art/enemies/ball_1/idle_1.png" id="1_gff1j"]
+[ext_resource type="Texture2D" uid="uid://deixoh0r6etra" path="res://art/enemies/ball_1/idle_2.png" id="2_cdls6"]
+[ext_resource type="Shader" path="res://scenes/characters/mob.gdshader" id="2_exd3a"]
+[ext_resource type="Texture2D" uid="uid://doj8xsxoeg0fu" path="res://art/enemies/ball_1/idle_3.png" id="3_ea7x5"]
+[ext_resource type="Texture2D" uid="uid://mdcarmuxhgc8" path="res://art/enemies/ball_1/idle_4.png" id="4_maro8"]
+[ext_resource type="AudioStream" uid="uid://b21f1aj2no7be" path="res://art/audio/sound_effects/metal-arrow-fast-hit.wav" id="7_x2pld"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7rbn2"]
+resource_local_to_scene = true
+shader = ExtResource("2_exd3a")
+shader_parameter/color = Color(0.901961, 0.901961, 0.901961, 1)
+shader_parameter/progress = 0.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_edhvc"]
+animations = [{
+"frames": [{
+"duration": 30.0,
+"texture": ExtResource("1_gff1j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_cdls6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ea7x5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_maro8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 30.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rl26w"]
+radius = 187.242
+
+[node name="Mob" type="RigidBody2D" groups=["mobs"]]
+position = Vector2(1, 1)
+collision_layer = 2
+collision_mask = 7
+gravity_scale = 0.0
+script = ExtResource("1_bug0d")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_7rbn2")
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_edhvc")
+frame_progress = 0.372737
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -1)
+scale = Vector2(0.15, 0.15)
+shape = SubResource("CircleShape2D_rl26w")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="HitFlashTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[node name="HitSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_x2pld")
+
+[node name="DeathParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 200
+speed_scale = 10.0
+lifetime_randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 40.28
+direction = Vector2(5, 0)
+spread = 112.27
+gravity = Vector2(0, 0)
+scale_amount_min = 0.5
+scale_amount_max = 2.0
+color = Color(0.733333, 0.717647, 0, 1)
+hue_variation_max = 1.0
+
+[node name="DeathTimer" type="Timer" parent="."]
+
+[node name="DamageDisplayMarkers" type="Node2D" parent="."]
+
+[node name="DamageMarkerC" type="Marker2D" parent="DamageDisplayMarkers"]
+position = Vector2(0, -15)
+
+[node name="DamageMarkerL" type="Marker2D" parent="DamageDisplayMarkers"]
+position = Vector2(-13, -15)
+
+[node name="DamageMarkerR" type="Marker2D" parent="DamageDisplayMarkers"]
+position = Vector2(13, -15)
+
+[node name="DamageText" type="Node2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="HitFlashTimer" to="." method="_on_hit_flash_timer_timeout"]

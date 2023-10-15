@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://c2f2racm3ifgk"]
+
+[ext_resource type="Script" path="res://scenes/items/power_up_orb.gd" id="1_3sfv4"]
+[ext_resource type="Texture2D" uid="uid://ckndvi4y564rb" path="res://art/items/powerup_1.png" id="1_wcudl"]
+[ext_resource type="Texture2D" uid="uid://c0o3bnyxvaf5v" path="res://art/lights/lights_1.png" id="2_el88f"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d4k4k"]
+radius = 340.147
+
+[sub_resource type="Animation" id="Animation_8vaff"]
+resource_name = "default"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.290196), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v2c7k"]
+_data = {
+"default": SubResource("Animation_8vaff")
+}
+
+[node name="PowerUpOrb" type="Area2D" groups=["items"]]
+scale = Vector2(0.05, 0.05)
+script = ExtResource("1_3sfv4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_wcudl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, 5.00002)
+shape = SubResource("CircleShape2D_d4k4k")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.427451, 0.588235, 0.905882, 1)
+energy = 4.0
+texture = ExtResource("2_el88f")
+texture_scale = 5.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_v2c7k")
+}
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

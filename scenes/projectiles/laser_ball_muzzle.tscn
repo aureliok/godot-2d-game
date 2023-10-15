@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://cnahy08jetlrp"]
+
+[ext_resource type="Texture2D" uid="uid://bk5h1d8tw8xji" path="res://art/projectiles/laser_ball_fire_muzzle_1.png" id="1_nbnsv"]
+[ext_resource type="Texture2D" uid="uid://2ff0wqe65rgm" path="res://art/projectiles/laser_ball_fire_muzzle_2.png" id="2_fjub5"]
+[ext_resource type="Texture2D" uid="uid://4jjmi50gapc1" path="res://art/projectiles/laser_ball_fire_muzzle_3.png" id="3_rpcch"]
+[ext_resource type="Script" path="res://scenes/projectiles/laser_ball_muzzle.gd" id="4_1mk1m"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_87mlp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_nbnsv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_fjub5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rpcch")
+}],
+"loop": false,
+"name": &"laser_muzzle",
+"speed": 10.0
+}]
+
+[node name="LaserBallMuzzle" type="AnimatedSprite2D"]
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_87mlp")
+animation = &"laser_muzzle"
+autoplay = "laser_muzzle"
+script = ExtResource("4_1mk1m")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
