@@ -11,7 +11,11 @@ var game_active: bool = false
 
 func _ready():
 	$Player.hide()
-	$HUD/LaserEnergyUI.hide()
+	$HUD/ShieldEnergyUI.hide()
+	
+	
+func _process(_delta):
+	$HUD.update_shield_energy()
 	
 
 func _on_player_hit():
@@ -37,7 +41,7 @@ func new_game():
 	get_tree().call_group("items", "queue_free")
 	$Player.start($StartPosition.position)
 	$Player.show()
-	$HUD/LaserEnergyUI.show()
+	$HUD/ShieldEnergyUI.show()
 	$StartTimer.start()
 	$HUD.update_score(game_score)
 	$HUD.update_powerup_orb(Globals.powerup_orbs)
@@ -87,7 +91,7 @@ func _on_player_laser_fire(laser_pos, laser_direction):
 		$Projectiles.add_child(laser_ball)
 		$Projectiles.add_child(laser_ball_muzzle)
 		$LaserSFX.play()
-		$HUD.update_laser_energy()
+#		$HUD.update_shield_energy()
 		
 		
 func _on_player_super_laser_fire(laser_pos, laser_direction):
@@ -114,7 +118,8 @@ func _on_mob_destroyed(score, mob_position):
 
 
 func _on_player_energy_recovery():
-	$HUD.update_laser_energy()
+#	$HUD.update_shield_energy()
+	pass
 	
 
 func _on_player_get_powerup_orb():
@@ -124,3 +129,8 @@ func _on_player_get_powerup_orb():
 
 func _on_increase_mob_timer_timeout():
 	$MobTimer.wait_time = .3
+
+
+func _on_player_energy_drain():
+#	$HUD.update_shield_energy()
+	pass

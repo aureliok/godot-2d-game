@@ -2,6 +2,7 @@ extends RigidBody2D
 
 @export var health: int = 30
 @export var destroy_score: int = 5
+var inflict_touch_damage: int
 var damage_display_scene: PackedScene = preload("res://scenes/characters/damage_display.tscn")
 
 signal mob_destroyed(score, mob_position)
@@ -27,6 +28,7 @@ func hit(damage_amount):
 	var damage_markers = $DamageDisplayMarkers.get_children()
 	var selected_damage_marker = damage_markers[randi() % damage_markers.size()]
 	
+	damage_marker.set_color("#ffff1a")
 	damage_marker.amount = damage_amount
 	damage_marker.position = selected_damage_marker.position ## on position, should work with angles? sin cosin and such to find where x should be when rotated 
 	damage_marker.rotation_degrees -= selected_damage_marker.global_rotation_degrees
@@ -53,3 +55,9 @@ func hit(damage_amount):
 
 func _on_hit_flash_timer_timeout():
 	$AnimatedSprite2D.material.set_shader_parameter("progress", 0)
+	
+	
+func _on_body_entered(body):
+	if body.is_in_group("player") and body.has_method("hit"):
+		inflict_touch_damage = randi_range(10,20)
+		body.hit(inflict_touch_damage)

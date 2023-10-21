@@ -40,7 +40,7 @@ radius = 12.0416
 
 [node name="Area2D" type="Area2D"]
 collision_layer = 4
-collision_mask = 3
+collision_mask = 2
 script = ExtResource("1_p3660")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

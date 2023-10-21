@@ -2,7 +2,7 @@ extends CanvasLayer
 
 signal start_game
 
-@onready var laser_energy_bar: TextureProgressBar = $LaserEnergyUI/TextureProgressBar
+@onready var shield_energy_bar: TextureProgressBar = $ShieldEnergyUI/TextureProgressBar
 
 func show_message(text):
 	$Message.text = text
@@ -34,8 +34,8 @@ func _on_start_button_pressed():
 	start_game.emit()
 	
 	
-func update_laser_energy():
-	laser_energy_bar.value = Globals.laser_energy
+func update_shield_energy():
+	shield_energy_bar.value = Globals.shield_energy
 	
 
 func update_powerup_orb(powerup_amount):

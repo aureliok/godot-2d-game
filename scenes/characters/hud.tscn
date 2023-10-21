@@ -70,7 +70,7 @@ text = "START"
 wait_time = 2.0
 one_shot = true
 
-[node name="LaserEnergyUI" type="MarginContainer" parent="."]
+[node name="ShieldEnergyUI" type="MarginContainer" parent="."]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -84,12 +84,11 @@ scale = Vector2(0.3, 0.3)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="LaserEnergyUI"]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="ShieldEnergyUI"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-max_value = 150.0
-value = 150.0
+value = 100.0
 texture_under = ExtResource("3_a34va")
 texture_progress = ExtResource("4_obri8")
 

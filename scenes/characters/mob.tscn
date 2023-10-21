@@ -40,8 +40,10 @@ radius = 187.242
 [node name="Mob" type="RigidBody2D" groups=["mobs"]]
 position = Vector2(1, 1)
 collision_layer = 2
-collision_mask = 7
+collision_mask = 23
 gravity_scale = 0.0
+max_contacts_reported = 1
+contact_monitor = true
 script = ExtResource("1_bug0d")
 metadata/_edit_group_ = true
 
@@ -95,5 +97,6 @@ position = Vector2(13, -15)
 
 [node name="DamageText" type="Node2D" parent="."]
 
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="timeout" from="HitFlashTimer" to="." method="_on_hit_flash_timer_timeout"]

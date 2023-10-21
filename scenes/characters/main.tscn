@@ -79,7 +79,6 @@ attenuation = 0.5
 stream = ExtResource("10_m5qnu")
 volume_db = 5.0
 
-[connection signal="energy_recovery" from="Player" to="." method="_on_player_energy_recovery"]
 [connection signal="get_powerup_orb" from="Player" to="." method="_on_player_get_powerup_orb"]
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="laser_fire" from="Player" to="." method="_on_player_laser_fire"]
