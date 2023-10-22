@@ -8,7 +8,7 @@ func hit(damage_amount):
 		var damage_markers = $"../DamageDisplayMarkers".get_children()
 		var selected_damage_marker = damage_markers[randi() % damage_markers.size()]
 		
-		damage_marker.set_color("#61c1ff")
+		damage_marker.set_color("#9fd7ff")
 		damage_marker.amount = damage_amount
 		damage_marker.position = selected_damage_marker.position ## on position, should work with angles? sin cosin and such to find where x should be when rotated 
 		damage_marker.rotation_degrees -= selected_damage_marker.global_rotation_degrees
@@ -18,6 +18,7 @@ func hit(damage_amount):
 	
 	$ShieldSprite.material.set_shader_parameter("progress", 1)
 	$ShieldFlashTimer.start()
+	$ShieldHitAudio.play()
 
 
 func _on_shield_flash_timer_timeout():

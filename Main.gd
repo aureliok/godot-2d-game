@@ -14,7 +14,7 @@ func _ready():
 	$HUD/ShieldEnergyUI.hide()
 	
 	
-func _process(_delta):
+func _physics_process(_delta):
 	$HUD.update_shield_energy()
 	
 
@@ -90,7 +90,7 @@ func _on_player_laser_fire(laser_pos, laser_direction):
 		laser_ball_muzzle.rotation_degrees = rad_to_deg(laser_direction.angle())
 		$Projectiles.add_child(laser_ball)
 		$Projectiles.add_child(laser_ball_muzzle)
-		$LaserSFX.play()
+#		$LaserSFX.play()
 #		$HUD.update_shield_energy()
 		
 		
@@ -101,7 +101,7 @@ func _on_player_super_laser_fire(laser_pos, laser_direction):
 		super_laser_ball.rotation_degrees = rad_to_deg(laser_direction.angle())
 		super_laser_ball.direction = laser_direction
 		$Projectiles.add_child(super_laser_ball)
-		$SuperLaserSFX.play()
+#		$SuperLaserSFX.play()
 		$HUD.update_powerup_orb(Globals.powerup_orbs)
 		
 
@@ -124,13 +124,7 @@ func _on_player_energy_recovery():
 
 func _on_player_get_powerup_orb():
 	$HUD.update_powerup_orb(Globals.powerup_orbs)
-	$GetPowerUpOrbSFX.play()
 
 
 func _on_increase_mob_timer_timeout():
 	$MobTimer.wait_time = .3
-
-
-func _on_player_energy_drain():
-#	$HUD.update_shield_energy()
-	pass

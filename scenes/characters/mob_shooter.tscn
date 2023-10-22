@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dklspr04f1kxx"]
+
+[ext_resource type="Script" path="res://scenes/characters/mob_shooter.gd" id="1_0dlng"]
+[ext_resource type="Texture2D" uid="uid://gy2lxl0fj5p" path="res://art/enemies/shooter_ball_1/shooter_ball_1.png" id="1_6m4q0"]
+
+[node name="MobShooter" type="CharacterBody2D"]
+script = ExtResource("1_0dlng")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("1_6m4q0")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+build_mode = 1
+polygon = PackedVector2Array(-47, 154, -68, 144, -92, 120, -108, 93, -118, 54, -151, -16, -111, -151, -78, -185, -66, -178, -88, -151, -110, 6, -94, -20, -73, -43, -45, -60, -14, -67, 15, -67, 50, -55, 80, -36, 98, -13, 114, 25, 88, -150, 69, -177, 77, -184, 110, -149, 148, -19, 117, 49, 113, 75, 106, 99, 94, 119, 76, 138, 49, 157, 21, 166, -11, 167)

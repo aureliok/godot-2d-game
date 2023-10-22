@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bm3mg0no27ftr"]
+[gd_scene load_steps=10 format=3 uid="uid://bm3mg0no27ftr"]
 
 [ext_resource type="Script" path="res://scenes/projectiles/super_laser.gd" id="1_mf6bj"]
 [ext_resource type="Texture2D" uid="uid://3ujhafihhxd3" path="res://art/projectiles/super_laser_1.png" id="1_py7e3"]
 [ext_resource type="Texture2D" uid="uid://bl85snkwxl7qj" path="res://art/projectiles/super_laser_2.png" id="2_mbbjq"]
 [ext_resource type="Texture2D" uid="uid://b1tif3xcvb2sn" path="res://art/projectiles/super_laser_3.png" id="3_7jk7s"]
+[ext_resource type="AudioStream" uid="uid://c06veqx71humq" path="res://art/audio/sound_effects/super-laser-gun.wav" id="5_xk8v4"]
 
 [sub_resource type="Animation" id="Animation_ysft0"]
 resource_name = "super_laser_start"
@@ -69,5 +70,9 @@ position = Vector2(92, 6)
 scale = Vector2(0.4, 0.4)
 shape = SubResource("CircleShape2D_sn4aq")
 disabled = true
+
+[node name="SuperLaserSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_xk8v4")
+volume_db = 5.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

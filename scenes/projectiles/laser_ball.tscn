@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://hmrrhj2p6v6t"]
+[gd_scene load_steps=11 format=3 uid="uid://hmrrhj2p6v6t"]
 
 [ext_resource type="Texture2D" uid="uid://ir32cxjoioaj" path="res://art/projectiles/laser_ball_1.png" id="1_hibax"]
 [ext_resource type="Script" path="res://scenes/projectiles/laser_ball.gd" id="1_p3660"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://n70qpnjc5ed2" path="res://art/projectiles/laser_ball_blast_2.png" id="3_ejtsq"]
 [ext_resource type="Texture2D" uid="uid://dnc0t1tffiy6y" path="res://art/projectiles/laser_ball_blast_3.png" id="4_fc36a"]
 [ext_resource type="Texture2D" uid="uid://c8yxka1bq24of" path="res://art/projectiles/laser_ball_blast_4.png" id="5_jc8e6"]
+[ext_resource type="AudioStream" uid="uid://coj2qyhtuxi2q" path="res://art/audio/sound_effects/short-laser-gun-shot.wav" id="7_vsnmb"]
+[ext_resource type="AudioStream" uid="uid://b21f1aj2no7be" path="res://art/audio/sound_effects/metal-arrow-fast-hit.wav" id="8_1lvfd"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5lbfl"]
 animations = [{
@@ -56,6 +58,12 @@ position = Vector2(0, -10)
 shape = SubResource("CircleShape2D_4y0aa")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="LaserSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_vsnmb")
+
+[node name="EnemyHitSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_1lvfd")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

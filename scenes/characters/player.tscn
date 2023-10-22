@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cfem74ede2h17"]
+[gd_scene load_steps=28 format=3 uid="uid://cfem74ede2h17"]
 
 [ext_resource type="Texture2D" uid="uid://buevxsr2ou046" path="res://art/character/idle/idle_1.png" id="1_cqeqq"]
 [ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_w80cm"]
@@ -15,6 +15,9 @@
 [ext_resource type="Texture2D" uid="uid://jk2wvh24tni5" path="res://art/character/idle/idle_4.png" id="4_sbwc5"]
 [ext_resource type="Texture2D" uid="uid://de6idrw25vcdi" path="res://art/character/firing/firing_3.png" id="4_ud5f1"]
 [ext_resource type="Texture2D" uid="uid://c5qqkwj0f4wp7" path="res://art/character/firing/firing_4.png" id="5_dk80p"]
+[ext_resource type="AudioStream" uid="uid://bbb2ov6afc6m0" path="res://art/audio/sound_effects/shield-falling-hit-757.wav" id="5_pfuag"]
+[ext_resource type="AudioStream" uid="uid://b3pdy8typ2c8r" path="res://art/audio/sound_effects/shield-on.wav" id="6_dmcup"]
+[ext_resource type="AudioStream" uid="uid://c4a5ey37scypd" path="res://art/audio/sound_effects/shield-off.wav" id="7_nb8q7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ei642"]
 radius = 39.0
@@ -222,6 +225,18 @@ one_shot = true
 [node name="ShieldDepletedTimer" type="Timer" parent="Shield"]
 wait_time = 0.8
 one_shot = true
+
+[node name="ShieldHitAudio" type="AudioStreamPlayer2D" parent="Shield"]
+stream = ExtResource("5_pfuag")
+volume_db = -2.0
+
+[node name="ShieldOnAudio" type="AudioStreamPlayer2D" parent="Shield"]
+stream = ExtResource("6_dmcup")
+volume_db = -2.0
+
+[node name="ShieldOffAudio" type="AudioStreamPlayer2D" parent="Shield"]
+stream = ExtResource("7_nb8q7")
+volume_db = -2.0
 
 [node name="CollisionShape2DPlayer" type="CollisionShape2D" parent="."]
 position = Vector2(0, -0.5)

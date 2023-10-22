@@ -39,7 +39,7 @@ func hit(damage_amount):
 	health -= damage_amount
 	$AnimatedSprite2D.material.set_shader_parameter("progress", 1)
 	$HitFlashTimer.start()
-	$HitSFX.play()
+#	$HitSFX.play()
 	if health <= 0:
 		$CollisionShape2D.set_deferred("disabled", true)
 		$AnimatedSprite2D.hide()

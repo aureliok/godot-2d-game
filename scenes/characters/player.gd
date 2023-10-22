@@ -3,8 +3,6 @@ extends CharacterBody2D
 signal hit
 signal laser_fire(laser_pos, laser_direction)
 signal super_laser_fire(laser_pos, laser_direction)
-#signal energy_recovery
-#signal energy_drain
 signal get_powerup_orb
 
 @export var speed: int = 200
@@ -15,6 +13,7 @@ var mouse_pos = null
 @onready var shield_depleted_animation: bool = false
 var screen_size
 var shield_on_time_tick: int = 0
+
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -43,7 +42,7 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	
-	if Input.is_action_pressed("fire") and can_laser: #and Globals.shield_energy > 0:
+	if Input.is_action_pressed("fire") and can_laser:
 #		$EnergyRecoveryTimer.stop()
 		$AnimatedSprite2D.play("firing")
 		var laser_marker = $LaserStartPosition
@@ -58,8 +57,6 @@ func _physics_process(delta):
 		
 	elif Input.is_action_just_released("fire"):
 		$AnimatedSprite2D.play("idle")
-#		$LaserStoppedTimer.start()
-#		await $LaserStoppedTimer.timeout
 		
 	
 	elif Input.is_action_just_pressed("super_fire") and can_laser and Globals.powerup_orbs == 3:
@@ -77,6 +74,12 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("shield"):
 		if shield_on:
 			## stopping shields
+			## TODO: shield energy is recovering almost instantly when deactivating shield
+			var tween = get_tree().create_tween()
+			tween.tween_property($Shield/ShieldSprite, "scale", Vector2(0,0), .3)
+			$Shield/ShieldOffAudio.play()
+			await tween.finished
+			
 			$Shield/ShieldSprite.visible = false
 			$Shield/ShieldCollision.set_deferred("disabled", true)
 			shield_on = false
@@ -84,28 +87,28 @@ func _physics_process(delta):
 			can_recover_energy = false
 		elif not shield_on and Globals.shield_energy > 0:
 			## activating shield
+			var tween = get_tree().create_tween()
 			$Shield/ShieldSprite.visible = true
+			tween.tween_property($Shield/ShieldSprite, "scale", Vector2(.19,.19), .3)
 			$Shield/ShieldCollision.set_deferred("disabled", false)
+
 			shield_on = true
 			shield_on_time_tick = 0
+			$Shield/ShieldOnAudio.play()
+			can_recover_energy = false
 			
 	## draining shield energy	
 	if shield_on:
 		shield_on_time_tick += 1
 		if shield_on_time_tick % 3 == 0:
 			Globals.shield_energy = clamp(Globals.shield_energy - 1, Globals.shield_energy_min, Globals.shield_energy_max)
-#			Globals.shield_energy -= 1
-#			energy_drain.emit()
+			
 			
 		if Globals.shield_energy == 0 and not shield_depleted_animation:
 			shield_depleted_animation = true
 			$Shield/ShieldDepletedTimer.start()
 			_shield_depleted_tween_animation($Shield/ShieldDepletedTimer.wait_time)
 			await $Shield/ShieldDepletedTimer.timeout
-#			$Shield/ShieldSprite.visible = false
-#			$Shield/ShieldCollision.set_deferred("disabled", true)
-#			shield_on = false
-#			$EnergyStopUseTimer.start()
 			
 			
 	if can_recover_energy:
@@ -122,6 +125,11 @@ func start(pos): ## rename this function
 	$Area2D/CollisionShape2D.set_deferred("disabled", false)
 	$AnimatedSprite2D.material.set_shader_parameter('line_thickness', 0)
 	$AnimatedSprite2D.material.set_shader_parameter('line_color', Vector4(1,1,1,0))
+	can_recover_energy = false
+	shield_on = false
+	shield_depleted_animation = false
+	Globals.shield_energy = 100
+	$Shield/ShieldSprite.scale = Vector2(0,0)
 	
 
 func _on_laser_timer_timeout():
@@ -129,7 +137,6 @@ func _on_laser_timer_timeout():
 
 
 func _on_area_2d_body_entered(_body):
-#	if not shield_on:
 	if $AnimatedSprite2D/AnimationPlayer.assigned_animation:
 		$AnimatedSprite2D/AnimationPlayer.stop()
 	$AnimatedSprite2D.play("death")
@@ -148,7 +155,6 @@ func _on_energy_recovery_timer_timeout():
 	if Globals.shield_energy > 100:
 		Globals.shield_energy = 100
 		can_recover_energy = false
-#	energy_recovery.emit()
 	if Globals.shield_energy < 100:
 		can_recover_energy = true
 
@@ -183,6 +189,11 @@ func _on_energy_stop_use_timer_timeout():
 
 
 func _on_shield_depleted_timer_timeout():
+	var tween = get_tree().create_tween()
+	tween.tween_property($Shield/ShieldSprite, "scale", Vector2(0,0), .3)
+	$Shield/ShieldOffAudio.play()
+	await tween.finished
+	
 	$Shield/ShieldSprite.visible = false
 	$Shield/ShieldCollision.set_deferred("disabled", true)
 	shield_on = false
@@ -192,8 +203,6 @@ func _on_shield_depleted_timer_timeout():
 	
 	
 func _shield_depleted_tween_animation(animation_duration):
-	## TODO: find a better way to code this blinking animation
-	print('animation_shield_depleted')
 	var animation_cycles_duration = animation_duration / 8
 	var tween = get_tree().create_tween()
 	var shield_flashing: bool = false
@@ -209,18 +218,6 @@ func _shield_depleted_tween_animation(animation_duration):
 	tween.tween_method(_set_shader_value, 1, 0, .001)
 	await tween.finished
 	shield_flashing = false
-		
-#	tween.tween_method(_set_shader_value, 0, 1, .05)
-#	tween.tween_method(_set_shader_value, 1, 0, .05)
-#	tween.tween_method(_set_shader_value, 0, 1, .05)
-#	tween.tween_method(_set_shader_value, 1, 0, .05)
-#	tween.tween_method(_set_shader_value, 0, 1, .05)
-#	tween.tween_method(_set_shader_value, 1, 0, .05)
-#	tween.tween_method(_set_shader_value, 0, 1, .05)
-#	tween.tween_method(_set_shader_value, 1, 0, .05)
-#	tween.tween_method(_set_shader_value, 0, 1, .1)
-#	tween.tween_method(_set_shader_value, 1, 0, .01)
-#	await tween.finished
 	
 	
 func _set_shader_value(value: float):
