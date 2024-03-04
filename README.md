@@ -15,5 +15,5 @@ The game will end if the player gets touched by a enemy or it's projectile.
 
 ## README IS WIP
 
-
+https://github.com/aureliok/godot-2d-game/assets/10407464/8f9a3e46-b1c6-45d4-bfd8-08117e0dc533
 
