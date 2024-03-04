@@ -1,9 +1,10 @@
 extends StaticBody2D
+#extends RigidBody2D
 
 var damage_display_scene: PackedScene = preload("res://scenes/characters/damage_display.tscn")
 
 func hit(damage_amount):
-	if Globals.shield_energy > 0:
+	if Globals.shield_energy > 0 and not get_parent().support_blocky_active:
 		var damage_marker = damage_display_scene.instantiate()
 		var damage_markers = $"../DamageDisplayMarkers".get_children()
 		var selected_damage_marker = damage_markers[randi() % damage_markers.size()]
@@ -19,6 +20,7 @@ func hit(damage_amount):
 	$ShieldSprite.material.set_shader_parameter("progress", 1)
 	$ShieldFlashTimer.start()
 	$ShieldHitAudio.play()
+	
 
 
 func _on_shield_flash_timer_timeout():

@@ -74,6 +74,7 @@ shield={
 2d_physics/layer_3="Projectiles"
 2d_physics/layer_4="Items"
 2d_physics/layer_5="Shields"
+2d_physics/layer_6="EnemyProjectiles"
 
 [rendering]
 

@@ -197,25 +197,26 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
-collision_mask = 9
+collision_mask = 11
 motion_mode = 1
 script = ExtResource("1_w80cm")
 
 [node name="Shield" type="StaticBody2D" parent="." groups=["player"]]
 collision_layer = 16
-collision_mask = 6
-constant_linear_velocity = Vector2(250, 250)
+collision_mask = 38
+constant_linear_velocity = Vector2(100, 100)
 script = ExtResource("2_lulnr")
 
 [node name="ShieldCollision" type="CollisionShape2D" parent="Shield"]
 position = Vector2(0, -0.5)
-scale = Vector2(1.15, 1.15)
+scale = Vector2(1.27, 1.27)
 shape = SubResource("CircleShape2D_ei642")
+disabled = true
 
 [node name="ShieldSprite" type="Sprite2D" parent="Shield"]
 material = SubResource("ShaderMaterial_mmfl8")
 position = Vector2(0, -1.5)
-scale = Vector2(0.19, 0.19)
+scale = Vector2(0.21, 0.21)
 texture = ExtResource("2_okd30")
 
 [node name="ShieldFlashTimer" type="Timer" parent="Shield"]
@@ -280,16 +281,24 @@ libraries = {
 "": SubResource("AnimationLibrary_6dod8")
 }
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="HitDetector" type="Area2D" parent="."]
 collision_mask = 6
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitDetector"]
 position = Vector2(0, -0.5)
 shape = SubResource("CircleShape2D_c1xq7")
 disabled = true
 
-[node name="LaserStartPosition" type="Marker2D" parent="."]
+[node name="LaserStartPositions" type="Node2D" parent="."]
+
+[node name="LaserStartPosition" type="Marker2D" parent="LaserStartPositions"]
 position = Vector2(46, 0)
+
+[node name="LaserStartPosition2" type="Marker2D" parent="LaserStartPositions"]
+position = Vector2(46, -15)
+
+[node name="LaserStartPosition3" type="Marker2D" parent="LaserStartPositions"]
+position = Vector2(46, 15)
 
 [node name="LaserTimer" type="Timer" parent="."]
 wait_time = 0.12
@@ -321,7 +330,7 @@ position = Vector2(15, -23)
 
 [connection signal="timeout" from="Shield/ShieldFlashTimer" to="Shield" method="_on_shield_flash_timer_timeout"]
 [connection signal="timeout" from="Shield/ShieldDepletedTimer" to="." method="_on_shield_depleted_timer_timeout"]
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="HitDetector" to="." method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="LaserTimer" to="." method="_on_laser_timer_timeout"]
 [connection signal="timeout" from="EnergyRecoveryTimer" to="." method="_on_energy_recovery_timer_timeout"]
 [connection signal="timeout" from="EnergyStopUseTimer" to="." method="_on_energy_stop_use_timer_timeout"]

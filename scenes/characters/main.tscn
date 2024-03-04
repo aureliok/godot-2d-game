@@ -64,6 +64,8 @@ rotation = -1.19029
 
 [node name="Enemies" type="Node2D" parent="."]
 
+[node name="EnemiesProjectiles" type="Node2D" parent="."]
+
 [node name="LaserSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_57670")
 
@@ -79,6 +81,10 @@ attenuation = 0.5
 stream = ExtResource("10_m5qnu")
 volume_db = 5.0
 
+[node name="AddSecondTimer" type="Timer" parent="."]
+
+[node name="Support" type="Node2D" parent="."]
+
 [connection signal="get_powerup_orb" from="Player" to="." method="_on_player_get_powerup_orb"]
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="laser_fire" from="Player" to="." method="_on_player_laser_fire"]
@@ -87,3 +93,4 @@ volume_db = 5.0
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
+[connection signal="timeout" from="AddSecondTimer" to="." method="_on_add_second_timer_timeout"]

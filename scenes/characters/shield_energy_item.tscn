@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://ceyv2lx8ha8pr"]
+
+[ext_resource type="Script" path="res://scenes/characters/shield_energy_item.gd" id="1_kowlf"]
+[ext_resource type="Texture2D" uid="uid://cmc3ts3xnsf1s" path="res://art/items/shield_energy_1.png" id="1_p5p7x"]
+[ext_resource type="Texture2D" uid="uid://c0o3bnyxvaf5v" path="res://art/lights/lights_1.png" id="2_vm5em"]
+[ext_resource type="AudioStream" uid="uid://cmeoi5ftx8nw2" path="res://art/audio/sound_effects/get-powerup-orb.wav" id="4_bbijr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hmkwy"]
+radius = 17.0
+height = 52.0
+
+[sub_resource type="Animation" id="Animation_8vaff"]
+resource_name = "default"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.290196), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v2c7k"]
+_data = {
+"default": SubResource("Animation_8vaff")
+}
+
+[node name="ShieldEnergyItem" type="Area2D" groups=["items"]]
+collision_layer = 8
+script = ExtResource("1_kowlf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.86981)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_p5p7x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_hmkwy")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.501961, 0.980392, 1, 1)
+texture = ExtResource("2_vm5em")
+texture_scale = 0.2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_v2c7k")
+}
+
+[node name="GetShieldEnergy" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_bbijr")
+volume_db = 10.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

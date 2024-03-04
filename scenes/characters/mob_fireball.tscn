@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://c4qe8um5r4rrb"]
+
+[ext_resource type="Script" path="res://scenes/characters/mob_fireball.gd" id="1_eeac2"]
+[ext_resource type="Texture2D" uid="uid://uj78d6sxeulf" path="res://art/enemies/shooter_ball_1/fireball_1.png" id="1_qiwyt"]
+[ext_resource type="Shader" path="res://scenes/characters/mob.gdshader" id="2_bo7a8"]
+[ext_resource type="AudioStream" uid="uid://djnx8iy8pxh5d" path="res://art/audio/sound_effects/fireball-enemy-shot.mp3" id="3_2js0x"]
+[ext_resource type="AudioStream" uid="uid://b21f1aj2no7be" path="res://art/audio/sound_effects/metal-arrow-fast-hit.wav" id="4_0efev"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_42frf"]
+resource_local_to_scene = true
+shader = ExtResource("2_bo7a8")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/progress = 0.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j8nxm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qiwyt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3r8pq"]
+radius = 90.5
+
+[node name="MobFireball" type="Area2D" groups=["mobs"]]
+collision_layer = 32
+collision_mask = 21
+script = ExtResource("1_eeac2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_42frf")
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_j8nxm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.6, -1)
+scale = Vector2(0.2, 0.2)
+shape = SubResource("CircleShape2D_3r8pq")
+
+[node name="FireballSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_2js0x")
+volume_db = -7.0
+
+[node name="HitSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_0efev")
+
+[node name="HitFlashTimer" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="FireballDestroyTimer" type="Timer" parent="."]
+wait_time = 0.05
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="HitFlashTimer" to="." method="_on_hit_flash_timer_timeout"]
+[connection signal="timeout" from="FireballDestroyTimer" to="." method="_on_fireball_destroy_timer_timeout"]

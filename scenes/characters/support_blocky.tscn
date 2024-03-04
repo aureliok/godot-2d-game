@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8610y5pwgvvi"]
+
+[ext_resource type="Script" path="res://scenes/characters/support_blocky.gd" id="1_51wwq"]
+[ext_resource type="Texture2D" uid="uid://cpdgs68ditb4p" path="res://art/companion/support_blocky.png" id="2_lva6p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7a6pm"]
+size = Vector2(40, 49)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w12ct"]
+radius = 105.005
+
+[node name="SupportBlocky" type="CharacterBody2D"]
+collision_mask = 35
+motion_mode = 1
+script = ExtResource("1_51wwq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_lva6p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0.5)
+shape = SubResource("RectangleShape2D_7a6pm")
+
+[node name="CloseRangePlayer" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CloseRangePlayer"]
+shape = SubResource("CircleShape2D_w12ct")
+
+[node name="ActiveTimer" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="CloseRangePlayer" to="." method="_on_close_range_player_body_entered"]
+[connection signal="body_exited" from="CloseRangePlayer" to="." method="_on_close_range_player_body_exited"]
+[connection signal="timeout" from="ActiveTimer" to="." method="_on_active_timer_timeout"]

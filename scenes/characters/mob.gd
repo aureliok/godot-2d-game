@@ -23,7 +23,6 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 	
 func hit(damage_amount):
 	## TO DO: should probably try to clean up this code
-#	var damage_amount: int = 10
 	var damage_marker = damage_display_scene.instantiate()
 	var damage_markers = $DamageDisplayMarkers.get_children()
 	var selected_damage_marker = damage_markers[randi() % damage_markers.size()]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhxm35vfr2hle"
-path="res://.godot/imported/shooter_ball_1.png-316d8cde57d2b252bb7c07e08f84ae38.ctex"
+uid="uid://cmc3ts3xnsf1s"
+path="res://.godot/imported/shield_energy_1.png-a1a411b6453322a86c11aa7f79b35e11.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/enemies/shooter_ball_1/shooter_ball_1.png"
-dest_files=["res://.godot/imported/shooter_ball_1.png-316d8cde57d2b252bb7c07e08f84ae38.ctex"]
+source_file="res://art/items/shield_energy_1.png"
+dest_files=["res://.godot/imported/shield_energy_1.png-a1a411b6453322a86c11aa7f79b35e11.ctex"]
 
 [params]
 

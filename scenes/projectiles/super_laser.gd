@@ -21,10 +21,21 @@ func _process(delta):
 	
 	
 func _on_body_entered(body):
-	if body.has_method("hit"):
-		var damage_amount: int = randi_range(min_damage,max_damage)
-		body.hit(damage_amount)
+	_laser_hit_target(body)
 		
+		
+func _on_area_entered(area):
+	_laser_hit_target(area)
+	
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	queue_free()
+	
+	
+func _laser_hit_target(target):
+	if target.has_method("hit"):
+		var damage_amount: int = randi_range(min_damage,max_damage)
+		target.hit(damage_amount)
+		$EnemyHitSFX.play()
+
+
